@@ -1,13 +1,15 @@
 return {
-	"nvim-treesitter/nvim-treesitter",
-	build = ":TSUpdate",
-	config = function()
-		local config = require("nvim-treesitter.configs")
-		config.setup({
+  "nvim-treesitter/nvim-treesitter",
+  build = ":TSUpdate",
+  config = function()
+    local config = require("nvim-treesitter.configs")
+    config.setup({
       auto_install = true,
-			sync_install = false,
-			highlight = { enable = true },
-			indent = { enable = true },
-		})
-	end,
+      sync_install = false,
+      highlight = { enable = true },
+      additional_vim_regex_highlighting = false,
+      indent = { enable = true },
+    })
+    vim.treesitter.language.register("markdown", "mdx")
+  end,
 }
