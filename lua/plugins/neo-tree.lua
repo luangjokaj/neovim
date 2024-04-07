@@ -24,7 +24,7 @@ return {
         },
       },
     })
-    vim.keymap.set("n", "<c-s>", ":Neotree position=left<CR>", {})
+    vim.keymap.set("n", "<leader>tre", ":Neotree position=left<CR>", {})
     vim.keymap.set("n", "<leader>show", ":Neotree reveal<CR>", {})
   end,
 }
