@@ -36,7 +36,7 @@ return {
       vim.keymap.set("n", "<leader>cd", vim.lsp.buf.definition, {})
       vim.keymap.set("n", "<leader>cr", vim.lsp.buf.references, {})
       vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, {})
-      vim.keymap.set('n', '<leader>D', vim.lsp.buf.type_definition, {})
+      vim.keymap.set("n", "<leader>D", vim.lsp.buf.type_definition, {})
     end,
   },
 }
