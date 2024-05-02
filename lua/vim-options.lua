@@ -21,4 +21,8 @@ vim.keymap.set("n", "<c-r>", ":redo<CR>")
 vim.keymap.set("n", "<c-w>", ":w<CR>")
 
 vim.keymap.set("n", "<leader>h", ":nohlsearch<CR>")
+
+vim.keymap.set("n", "<c-x>", ":bd<CR>")
+vim.keymap.set("n", "<c-z>", ':echo "Do not exit please"<CR>')
+
 vim.wo.number = true
