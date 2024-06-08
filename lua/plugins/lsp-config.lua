@@ -17,7 +17,7 @@ return {
     "neovim/nvim-lspconfig",
     lazy = false,
     config = function()
-      local capabilities = require("cmp_nvim_lsp").default_capabilities()
+      local capabilities = require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities())
       local lspconfig = require("lspconfig")
       lspconfig.tsserver.setup({
         capabilities = capabilities,
@@ -31,7 +31,6 @@ return {
       lspconfig.lua_ls.setup({
         capabilities = capabilities,
       })
-
       vim.keymap.set("n", "K", vim.lsp.buf.hover, {})
       vim.keymap.set("n", "<leader>cd", vim.lsp.buf.definition, {})
       vim.keymap.set("n", "<leader>cr", vim.lsp.buf.references, {})
