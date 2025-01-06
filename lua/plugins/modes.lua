@@ -7,15 +7,15 @@ return {
         bg = "", -- Optional bg param, defaults to Normal hl group
         copy = "#f5c359",
         delete = "#c75c6a",
-        insert = "#78ccc5",
+        insert = "#3C4048",
         visual = "#9745be",
       },
 
       -- Set opacity for cursorline and number background
-      line_opacity = 0.2,
+      line_opacity = 0.8,
 
       -- Enable cursor highlights
-      set_cursor = true,
+      set_cursor = false,
 
       -- Enable cursorline initially, and disable cursorline for inactive windows
       -- or ignored filetypes
