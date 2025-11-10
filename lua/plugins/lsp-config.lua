@@ -12,19 +12,24 @@ return {
     lazy = false,
     config = function()
       local capabilities = require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities())
-      local lspconfig = require("lspconfig")
-      lspconfig.ts_ls.setup({
+
+      vim.lsp.config("ts_ls", {
         capabilities = capabilities,
       })
-      lspconfig.solargraph.setup({
+
+      vim.lsp.config("solargraph", {
         capabilities = capabilities,
       })
-      lspconfig.html.setup({
+
+      vim.lsp.config("html", {
         capabilities = capabilities,
       })
-      lspconfig.lua_ls.setup({
+
+      vim.lsp.config("lua_ls", {
         capabilities = capabilities,
       })
+
+      -- Keymaps
       vim.keymap.set("n", "<leader>cs", vim.lsp.buf.hover, {})
       vim.keymap.set("n", "<leader>cd", vim.lsp.buf.definition, {})
       vim.keymap.set("n", "<leader>cr", vim.lsp.buf.references, {})
