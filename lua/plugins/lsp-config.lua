@@ -15,6 +15,27 @@ return {
 
       vim.lsp.config("ts_ls", {
         capabilities = capabilities,
+        init_options = {
+          preferences = {
+            importModuleSpecifierPreference = "non-relative",
+          },
+        },
+        commands = {
+          ["_typescript.applyCodeActionCommand"] = function(command, ctx)
+            local clients = vim.lsp.get_clients({ bufnr = ctx.bufnr, name = "ts_ls" })
+            if #clients == 0 then
+              return
+            end
+            local client = clients[1]
+            local arguments = command.arguments or {}
+            for _, arg in ipairs(arguments) do
+              client:request_sync("workspace/executeCommand", {
+                command = arg.command,
+                arguments = arg.arguments,
+              }, 5000, ctx.bufnr)
+            end
+          end,
+        },
       })
 
       vim.lsp.config("solargraph", {
