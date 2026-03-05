@@ -18,6 +18,6 @@
 [[-----------------------------------------------------------------------]],
 ```
 
-![preview](https://i.imgur.com/rEzpp0s.png)
+![preview](https://i.imgur.com/pKdcNZL.jpeg)
 
 Dir: `~/.config/nvim`
