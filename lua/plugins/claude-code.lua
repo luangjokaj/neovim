@@ -5,7 +5,7 @@ return {
   },
   config = function()
     require("claude-code").setup({
-      command = "claude --enable-auto-mode",
+      command = "claude --dangerously-skip-permissions",
       window = {
         position = "float",
         float = {
