@@ -5,6 +5,7 @@ return {
   },
   config = function()
     require("claude-code").setup({
+      command = "claude --enable-auto-mode",
       window = {
         position = "float",
         float = {
