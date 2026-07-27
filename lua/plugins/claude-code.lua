@@ -1,22 +1,21 @@
 return {
-  "greggh/claude-code.nvim",
-  dependencies = {
-    "nvim-lua/plenary.nvim", -- Required for git operations
+  "mb6611/claude-multi.nvim",
+  dependencies = { "folke/snacks.nvim" },
+  event = "VeryLazy",
+  opts = {
+    layout = "float", -- "float" or "sidebar"
+    float_width = 0.9,
+    float_height = 0.9,
+    keymaps = {
+      toggle = "<leader>cc",
+      new_session = "<leader>cn",
+      new_worktree = "<leader>cw",
+      prev_session = "<leader>ch",
+      next_session = "<leader>cl",
+      close_tab = "<leader>cx",
+      -- disabled: needs the `recall` CLI, and <leader>cr is LSP references
+      recall = false,
+      recall_worktree = false,
+    },
   },
-  config = function()
-    require("claude-code").setup({
-      command = "claude --dangerously-skip-permissions",
-      window = {
-        position = "float",
-        float = {
-          width = "90%", -- Take up 90% of the editor width
-          height = "90%", -- Take up 90% of the editor height
-          row = "center", -- Center vertically
-          col = "center", -- Center horizontally
-          relative = "editor",
-          border = "double", -- Use double border style
-        },
-      },
-    })
-  end,
 }
