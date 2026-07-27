@@ -6,6 +6,7 @@ vim.cmd("set clipboard=unnamed")
 vim.g.mapleader = " "
 
 vim.opt.swapfile = false
+vim.opt.timeoutlen = 400
 
 -- Navigate vim panes betterop
 vim.keymap.set("n", "<c-k>", ":wincmd k<CR>")
