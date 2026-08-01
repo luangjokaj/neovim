@@ -48,8 +48,18 @@ return {
         capabilities = capabilities,
       })
 
+      -- `vim` used to be declared in .luarc.json, but that file makes lua_ls
+      -- ignore the settings lazydev sends at runtime, so it lives here now
       vim.lsp.config("lua_ls", {
         capabilities = capabilities,
+        settings = {
+          Lua = {
+            -- `missing-fields` fires on plugin opts tables whose type
+            -- annotations mark practically-optional fields as required
+            -- (nvim-treesitter's TSConfig being the usual offender)
+            diagnostics = { globals = { "vim" }, disable = { "missing-fields" } },
+          },
+        },
       })
 
       -- Keymaps
