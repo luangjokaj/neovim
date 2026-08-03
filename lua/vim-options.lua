@@ -2,7 +2,20 @@ vim.cmd("set expandtab")
 vim.cmd("set tabstop=2")
 vim.cmd("set softtabstop=2")
 vim.cmd("set shiftwidth=2")
-vim.cmd("set clipboard=unnamed")
+-- Headless server over mosh: no X clipboard, and nvim's OSC 52 autodetect
+-- needs $SSH_TTY, which mosh does not set. Wire it up explicitly instead.
+-- Write-only: mosh forwards OSC 52 copies to Ghostty/Blink but cannot read
+-- the local clipboard, so p/P paste the last yank; Cmd+V pastes local content.
+local osc52 = require("vim.ui.clipboard.osc52")
+local function paste_from_unnamed()
+  return { vim.split(vim.fn.getreg('"'), "\n"), vim.fn.getregtype('"') }
+end
+vim.g.clipboard = {
+  name = "osc52-write-only",
+  copy = { ["+"] = osc52.copy("+"), ["*"] = osc52.copy("*") },
+  paste = { ["+"] = paste_from_unnamed, ["*"] = paste_from_unnamed },
+}
+vim.opt.clipboard = "unnamed,unnamedplus"
 vim.g.mapleader = " "
 
 vim.opt.swapfile = false
