@@ -5,17 +5,34 @@ vim.cmd("set shiftwidth=2")
 -- Headless server over mosh: no X clipboard, and nvim's OSC 52 autodetect
 -- needs $SSH_TTY, which mosh does not set. Wire it up explicitly instead.
 -- Write-only: mosh forwards OSC 52 copies to Ghostty/Blink but cannot read
--- the local clipboard, so p/P paste the last yank; Cmd+V pastes local content.
+-- the local clipboard back, so pasting local content is Cmd+V in the
+-- terminal (bracketed paste); p/P paste nvim's own registers natively.
 local osc52 = require("vim.ui.clipboard.osc52")
+
+-- Mirror plain yanks (y only, unnamed register) to the local clipboard.
+-- Deliberately not clipboard=unnamed*: that would also sync every d/x/c,
+-- clobbering the clipboard on deletes, and fire duplicate OSC 52 writes.
+vim.api.nvim_create_autocmd("TextYankPost", {
+  group = vim.api.nvim_create_augroup("osc52_yank_sync", {}),
+  callback = function()
+    local ev = vim.v.event
+    if ev.operator == "y" and ev.regname == "" then
+      -- "+" maps to the OSC 52 "c" target; mosh drops the "p" target.
+      osc52.copy("+")(ev.regcontents)
+    end
+  end,
+})
+
+-- Explicit "+ / "* (and plugins using them) still work: writes go out via
+-- OSC 52 ("c" target for both), reads fall back to the last yank/delete.
 local function paste_from_unnamed()
   return { vim.split(vim.fn.getreg('"'), "\n"), vim.fn.getregtype('"') }
 end
 vim.g.clipboard = {
   name = "osc52-write-only",
-  copy = { ["+"] = osc52.copy("+"), ["*"] = osc52.copy("*") },
+  copy = { ["+"] = osc52.copy("+"), ["*"] = osc52.copy("+") },
   paste = { ["+"] = paste_from_unnamed, ["*"] = paste_from_unnamed },
 }
-vim.opt.clipboard = "unnamed,unnamedplus"
 vim.g.mapleader = " "
 
 vim.opt.swapfile = false
